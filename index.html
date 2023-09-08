@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>STL Scout</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.16/tailwind.min.css">
+  <style>
+    body {
+      background-color: #F3F4F6;
+    }
+    .button-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+.gradient-text {
+  display: inline-block;
+  background: -webkit-linear-gradient(18deg, red, purple, blue);
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 4rem;
+  text-align: center;
+  width: 100%;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container mx-auto p-10">
+    <h1 class="gradient-text mb-2">STL Scout</h1>
+    <h2 class="text-xl text-center text-gray-800 mb-10">3D Print Search Aggregator</h2>
+    <div class="flex justify-center">
+      <input type="text" id="searchBox" class="p-2 rounded border shadow-inner w-1/2" placeholder="Search...">
+    </div>
+    <div class="button-wrapper mt-5">
+      <button onclick="search('printables')" class="bg-gray-700 text-white rounded-lg p-2 mb-3 w-40">Search Printables</button>
+      <button onclick="search('thingiverse')" class="bg-gray-700 text-white rounded-lg p-2 mb-3 w-40">Search Thingiverse</button>
+      <div class="flex items-center">
+        <button onclick="search('reddit')" class="bg-gray-700 text-white rounded-lg p-2 mb-3 w-40">Search Reddit</button>
+        <select id="redditRecency" class="ml-4 p-2 rounded border shadow-inner w-40">
+          <option value="all">All Time</option>
+          <option value="month">Last Month</option>
+          <option value="year">Last Year</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <script>
+    function search(site) {
+      const query = document.getElementById("searchBox").value;
+      let url = "";
+      if (site === 'thingiverse') {
+        url = `https://www.thingiverse.com/search?q=${query}`;
+      } else if (site === 'reddit') {
+        const recency = document.getElementById("redditRecency").value;
+        url = `https://www.reddit.com/r/3Dprinting/search?q=${query}&restrict_sr=1&t=${recency}`;
+      } else if (site === 'printables') {
+        url = `https://www.printables.com/search/models?o=popular&q=${query}`;
+      }
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
